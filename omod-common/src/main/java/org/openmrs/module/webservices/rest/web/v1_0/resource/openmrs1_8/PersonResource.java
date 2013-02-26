@@ -249,8 +249,6 @@ public class PersonResource extends DataDelegatingCrudResource<Person> {
 		
 		// switching which name is preferred
 		for (PersonName existing : instance.getNames()) {
-			if (existing.isVoided())
-				continue;
 			if (existing.isPreferred() && !existing.equals(name))
 				existing.setPreferred(false);
 		}
@@ -283,8 +281,6 @@ public class PersonResource extends DataDelegatingCrudResource<Person> {
 		
 		//un mark the current preferred address as preferred if any
 		for (PersonAddress existing : instance.getAddresses()) {
-			if (existing.isVoided())
-				continue;
 			if (existing.isPreferred() && !OpenmrsUtil.nullSafeEquals(existing, address))
 				existing.setPreferred(false);
 		}
