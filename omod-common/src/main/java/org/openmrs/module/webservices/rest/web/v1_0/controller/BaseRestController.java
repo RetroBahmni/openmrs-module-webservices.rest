@@ -13,10 +13,10 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.controller;
 
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.webservices.docs.ResourceDocCreator;
 import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.RestUtil;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -83,25 +82,5 @@ public class BaseRestController {
 		}
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
-	}
-	
-	/**
-	 * Gets a catalog of all available resources.
-	 *
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(method = RequestMethod.GET, value = "/rest/" + RestConstants.VERSION_1 + "/catalog")
-	@ResponseBody
-	public Object getResourceCatalog(HttpServletRequest request) throws Exception {
-		SimpleObject resourceCatalog = new SimpleObject();
-		String prefix = RestConstants.URI_PREFIX;
-		//strip the ending string '/rest/' because it will be added by ResourceDocCreator.create
-		if (StringUtils.isNotBlank(prefix) && prefix.endsWith("/rest/"))
-			prefix = prefix.substring(0, prefix.lastIndexOf("/rest/"));
-		
-		resourceCatalog.put("catalog", ResourceDocCreator.create(prefix));
-		
-		return new LinkedHashMap<String, Object>(resourceCatalog);
 	}
 }
