@@ -25,13 +25,14 @@
 
 	<modules>
 		<module>omod-common</module>
+		<module>omod-1.8</module>
 		<module>omod-1.9</module>
 		<module>omod</module>
 	</modules>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<openMRSVersion>1.8.1</openMRSVersion>
+		<openmrs.version>1.8.1</openmrs.version>
 		<MODULE_ID>${project.parent.artifactId}</MODULE_ID>
 		<MODULE_NAME>${project.parent.name}</MODULE_NAME>
 		<MODULE_VERSION>${project.parent.version}</MODULE_VERSION>
@@ -43,7 +44,7 @@
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
 				<artifactId>openmrs-api</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 				<type>jar</type>
 				<scope>provided</scope>
 			</dependency>
@@ -51,7 +52,7 @@
 			<dependency>
 				<groupId>org.openmrs.web</groupId>
 				<artifactId>openmrs-web</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 				<type>jar</type>
 				<scope>provided</scope>
 			</dependency>
@@ -59,7 +60,7 @@
 			<dependency>
 				<groupId>org.openmrs.api</groupId>
 				<artifactId>openmrs-api</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 				<classifier>tests</classifier>
 				<type>jar</type>
 				<scope>test</scope>
@@ -68,7 +69,7 @@
 			<dependency>
 				<groupId>org.openmrs.web</groupId>
 				<artifactId>openmrs-web</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 				<classifier>tests</classifier>
 				<type>jar</type>
 				<scope>test</scope>
@@ -77,7 +78,7 @@
 			<dependency>
 				<groupId>org.openmrs.test</groupId>
 				<artifactId>openmrs-test</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 				<type>pom</type>
 				<scope>test</scope>
 			</dependency>
@@ -85,7 +86,7 @@
 			<dependency>
 				<groupId>org.openmrs.tools</groupId>
 				<artifactId>openmrs-tools</artifactId>
-				<version>${openMRSVersion}</version>
+				<version>${openmrs.version}</version>
 			</dependency>
 			
 			<dependency>

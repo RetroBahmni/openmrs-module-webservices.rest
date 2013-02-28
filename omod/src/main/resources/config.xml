@@ -17,8 +17,8 @@
 	<updateURL>https://modules.openmrs.org/modules/download/webservices.rest/update.rdf</updateURL>
 	<!-- /Base Module Properties -->
 	
-	<require_version>1.9.3</require_version>
-	
+	<require_version>${openmrs.version}</require_version>
+
 	<!-- Extensions -->
 	<extension>
 		<point>org.openmrs.admin.list</point>
