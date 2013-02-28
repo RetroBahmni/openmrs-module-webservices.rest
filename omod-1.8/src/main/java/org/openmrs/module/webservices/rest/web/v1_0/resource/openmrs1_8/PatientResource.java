@@ -44,8 +44,7 @@ import java.util.Set;
 /**
  * {@link Resource} for Patients, supporting standard CRUD operations
  */
-@Resource(name = "patient", supportedClass = Patient.class)
-//order must be less than that for PersonResource(order=1) RESTWS-273
+@Resource(name = "patient", supportedClass = Patient.class, supportedOpenmrsVersions = {"1.8.*", "1.9.*"})
 public class PatientResource extends DataDelegatingCrudResource<Patient> {
 	
 	public PatientResource() {
