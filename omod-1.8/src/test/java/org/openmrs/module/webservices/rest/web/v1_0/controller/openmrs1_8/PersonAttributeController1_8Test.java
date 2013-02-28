@@ -23,14 +23,14 @@ import org.openmrs.PersonAttribute;
 import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.webservices.rest.web.RestTestConstants1_8;
-import org.openmrs.module.webservices.rest.web.v1_0.controller.BaseCrudControllerTest;
+import org.openmrs.module.webservices.rest.web.v1_0.controller.MainResourceControllerTest;
 
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * Tests functionality of {@link PersonAttributeController}.
  */
-public class PersonAttributeController1_8Test extends BaseCrudControllerTest {
+public class PersonAttributeController1_8Test extends MainResourceControllerTest {
 	
 	String personUuid = RestTestConstants1_8.PERSON_UUID;
 	
@@ -83,7 +83,7 @@ public class PersonAttributeController1_8Test extends BaseCrudControllerTest {
 	}
 	
 	/**
-	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.BaseCrudControllerTest#getURI()
+	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.MainResourceControllerTest#getURI()
 	 */
 	@Override
 	public String getURI() {
@@ -91,7 +91,7 @@ public class PersonAttributeController1_8Test extends BaseCrudControllerTest {
 	}
 	
 	/**
-	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.BaseCrudControllerTest#getUuid()
+	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.MainResourceControllerTest#getUuid()
 	 */
 	@Override
 	public String getUuid() {
@@ -99,7 +99,7 @@ public class PersonAttributeController1_8Test extends BaseCrudControllerTest {
 	}
 	
 	/**
-	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.BaseCrudControllerTest#getAllCount()
+	 * @see org.openmrs.module.webservices.rest.web.v1_0.controller.MainResourceControllerTest#getAllCount()
 	 */
 	@Override
 	public long getAllCount() {
