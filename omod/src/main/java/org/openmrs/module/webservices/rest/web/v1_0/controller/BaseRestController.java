@@ -57,7 +57,7 @@ public class BaseRestController {
 			// user is not logged in -> 401 UNAUTHORIZED
 			errorCode = HttpServletResponse.SC_UNAUTHORIZED;
 			errorDetail = "User is not logged in";
-			response.addHeader("WWW-Authenticate", "Basic realm=\"OpenMRS at " + RestConstants.URI_PREFIX + "\"");
+			//			response.addHeader("WWW-Authenticate", "Basic realm=\"OpenMRS at " + RestConstants.URI_PREFIX + "\"");
 		}
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
