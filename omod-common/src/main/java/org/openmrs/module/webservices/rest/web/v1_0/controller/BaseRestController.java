@@ -39,11 +39,11 @@ import java.util.LinkedHashMap;
 @Controller
 @RequestMapping(value = "/rest/**")
 public class BaseRestController {
-	
+
 	private int errorCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-	
+
 	private String errorDetail;
-	
+
 	@ExceptionHandler(APIAuthenticationException.class)
 	@ResponseBody
 	private SimpleObject apiAuthenticationExceptionHandler(Exception ex, HttpServletRequest request,
@@ -56,14 +56,13 @@ public class BaseRestController {
 			// user is not logged in -> 401 UNAUTHORIZED
 			errorCode = HttpServletResponse.SC_UNAUTHORIZED;
 			errorDetail = "User is not logged in";
-			if (request.getHeader("Disable-WWW-Authenticate") == null
-			        || !request.getHeader("Disable-WWW-Authenticate").equals("true"))
+			if (request.getHeader("Disable-WWW-Authenticate") == null || !request.getHeader("Disable-WWW-Authenticate").equals("true"))
 				response.addHeader("WWW-Authenticate", "Basic realm=\"OpenMRS at " + RestConstants.URI_PREFIX + "\"");
 		}
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	private SimpleObject handleException(Exception ex, HttpServletRequest request, HttpServletResponse response)
@@ -74,7 +73,7 @@ public class BaseRestController {
 			if (StringUtils.isNotEmpty(ann.reason())) {
 				errorDetail = ann.reason();
 			}
-			
+
 		} else if (RestUtil.hasCause(ex, APIAuthenticationException.class)) {
 			return apiAuthenticationExceptionHandler(ex, request, response);
 		} else if (ex.getClass() == HttpRequestMethodNotSupportedException.class) {
