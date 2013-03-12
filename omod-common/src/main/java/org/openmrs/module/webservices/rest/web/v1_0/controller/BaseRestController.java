@@ -83,4 +83,30 @@ public class BaseRestController {
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
 	}
-p}
+
+	/**
+	 * It should be overridden if you want to expose resources under a different URL than /rest/v1.
+	 * 
+	 * @return the namespace
+	 */
+	public String getNamespace() {
+		return "v1";
+	}
+	
+	public String buildResourceName(String resource) {
+		String namespace = getNamespace();
+		
+		if (StringUtils.isBlank(namespace)) {
+			return resource;
+		} else {
+			if (namespace.startsWith("/")) {
+				namespace = namespace.substring(1);
+			}
+			if (!namespace.endsWith("/")) {
+				namespace += "/";
+			}
+			return namespace + resource;
+		}
+	}
+	
+}

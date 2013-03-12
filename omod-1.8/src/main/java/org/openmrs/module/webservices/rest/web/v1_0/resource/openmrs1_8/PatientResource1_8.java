@@ -44,7 +44,7 @@ import java.util.Set;
 /**
  * {@link Resource} for Patients, supporting standard CRUD operations
  */
-@Resource(name = "patient", supportedClass = Patient.class, supportedOpenmrsVersions = {"1.8.*", "1.9.*"})
+@Resource(name = RestConstants.VERSION_1 + "/patient", supportedClass = Patient.class, supportedOpenmrsVersions = {"1.8.*", "1.9.*"})
 public class PatientResource1_8 extends DataDelegatingCrudResource<Patient> {
 	
 	public PatientResource1_8() {
