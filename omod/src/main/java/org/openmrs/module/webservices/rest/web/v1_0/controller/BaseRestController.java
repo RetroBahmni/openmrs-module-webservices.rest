@@ -13,11 +13,6 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.controller;
 
-import java.util.LinkedHashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.api.APIAuthenticationException;
 import org.openmrs.api.context.Context;
@@ -33,6 +28,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedHashMap;
+
 /**
  * Resource controllers should extend this base class to have standard exception handling done
  * automatically. (This is necessary to send error messages as HTTP statuses rather than just as
@@ -41,14 +40,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 @RequestMapping(value = "/rest/**")
 public class BaseRestController {
-	
+
 	private int errorCode = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-	
+
 	private String errorDetail;
-	
+
 	@ExceptionHandler(APIAuthenticationException.class)
 	@ResponseBody
-	private SimpleObject apiAuthenticationExceptionHandler(Exception ex, HttpServletResponse response) throws Exception {
+	private SimpleObject apiAuthenticationExceptionHandler(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (Context.isAuthenticated()) {
 			// user is logged in but doesn't have the relevant privilege -> 403 FORBIDDEN
 			errorCode = HttpServletResponse.SC_FORBIDDEN;
@@ -57,34 +56,35 @@ public class BaseRestController {
 			// user is not logged in -> 401 UNAUTHORIZED
 			errorCode = HttpServletResponse.SC_UNAUTHORIZED;
 			errorDetail = "User is not logged in";
-			//			response.addHeader("WWW-Authenticate", "Basic realm=\"OpenMRS at " + RestConstants.URI_PREFIX + "\"");
+			if (request.getHeader("Disable-WWW-Authenticate") == null || !request.getHeader("Disable-WWW-Authenticate").equals("true"))
+				response.addHeader("WWW-Authenticate", "Basic realm=\"OpenMRS at " + RestConstants.URI_PREFIX + "\"");
 		}
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
 	}
-	
+
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
-	private SimpleObject handleException(Exception ex, HttpServletResponse response) throws Exception {
+	private SimpleObject handleException(Exception ex, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ResponseStatus ann = ex.getClass().getAnnotation(ResponseStatus.class);
 		if (ann != null) {
 			errorCode = ann.value().value();
 			if (StringUtils.isNotEmpty(ann.reason())) {
 				errorDetail = ann.reason();
 			}
-			
+
 		} else if (RestUtil.hasCause(ex, APIAuthenticationException.class)) {
-			return apiAuthenticationExceptionHandler(ex, response);
+			return apiAuthenticationExceptionHandler(ex, request, response);
 		} else if (ex.getClass() == HttpRequestMethodNotSupportedException.class) {
 			errorCode = HttpServletResponse.SC_METHOD_NOT_ALLOWED;
 		}
 		response.setStatus(errorCode);
 		return RestUtil.wrapErrorResponse(ex, errorDetail);
 	}
-	
+
 	/**
 	 * Gets a catalog of all available resources.
-	 * 
+	 *
 	 * @return
 	 * @throws Exception
 	 */
@@ -96,9 +96,9 @@ public class BaseRestController {
 		//strip the ending string '/rest/' because it will be added by ResourceDocCreator.create
 		if (StringUtils.isNotBlank(prefix) && prefix.endsWith("/rest/"))
 			prefix = prefix.substring(0, prefix.lastIndexOf("/rest/"));
-		
+
 		resourceCatalog.put("catalog", ResourceDocCreator.create(prefix));
-		
+
 		return new LinkedHashMap<String, Object>(resourceCatalog);
 	}
 }
