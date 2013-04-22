@@ -94,6 +94,7 @@ public class PersonResource extends DataDelegatingCrudResource<Person> {
 			description.addProperty("addresses");
 			description.addProperty("attributes", "activeAttributes", Representation.DEFAULT);
 			description.addProperty("voided");
+			description.addProperty("personDateCreated");
 			description.addProperty("auditInfo", findMethod("getAuditInfo"));
 			description.addSelfLink();
 			return description;
