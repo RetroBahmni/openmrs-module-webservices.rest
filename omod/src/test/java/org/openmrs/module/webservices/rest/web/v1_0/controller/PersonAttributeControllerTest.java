@@ -13,10 +13,7 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
 import junit.framework.Assert;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
@@ -29,6 +26,8 @@ import org.openmrs.module.webservices.rest.test.Util;
 import org.openmrs.web.test.BaseModuleWebContextSensitiveTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Tests functionality of {@link PersonAttributeController}.
@@ -60,7 +59,7 @@ public class PersonAttributeControllerTest extends BaseModuleWebContextSensitive
 		Object result = controller.retrieve(personUuid, attributeUuid, request);
 		Assert.assertNotNull(result);
 		Assert.assertEquals(attributeUuid, PropertyUtils.getProperty(result, "uuid"));
-		Assert.assertEquals("", PropertyUtils.getProperty(result, "value"));
+		Assert.assertEquals("NULL", PropertyUtils.getProperty(result, "value"));
 		Assert.assertNull(PropertyUtils.getProperty(result, "auditInfo"));
 	}
 	

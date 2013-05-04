@@ -148,6 +148,23 @@ public class PatientControllerTest extends BaseCrudControllerTest {
 		Assert.assertNotNull(PropertyUtils.getProperty(result, "display"));
 	}
 	
+	/**
+	 * @see PatientController#findPatients(String,WebRequest,HttpServletResponse)
+	 * @verifies find matching patients
+	 */
+	@Test
+	public void findPatients_shouldMatchThePatientVillage() throws Exception {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		request.addParameter("cityVillage", "Indianapolis");
+		List<?> results = (List<?>) new PatientController().search("Horatio", request, new MockHttpServletResponse()).get(
+		    "results");
+		Assert.assertEquals(1, results.size());
+		
+		request.setParameter("city_village", "NotIndianapolis");
+		results = (List<?>) new PatientController().search("Horatio", request, new MockHttpServletResponse()).get("results");
+		Assert.assertEquals(0, results.size());
+	}
+	
 	@Test(expected = ConversionException.class)
 	public void shouldFailWhenSetingThePreferredAddressOnAPatient() throws Exception {
 		executeDataSet("personAddress-Test.xml");
