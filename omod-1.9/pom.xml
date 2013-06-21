@@ -2,16 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.openmrs.module</groupId>
-		<artifactId>webservices.rest</artifactId>
+		<artifactId>bahmni-webservices.rest</artifactId>
 		<version>2.1.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>webservices.rest-omod-1.9</artifactId>
+	<artifactId>bahmni-webservices.rest-omod-1.9</artifactId>
 	<packaging>jar</packaging>
 	<name>Rest Web Services 1.9 OMOD</name>
 	<description>OpenMRS module project for Rest Web Services</description>
 
 	<properties>
-		<openmrs.version.1.9>1.9.2</openmrs.version.1.9>
+		<openmrs.version.1.9>1.9.4-SNAPSHOT</openmrs.version.1.9>
 	</properties>
 
 	<dependencies>
@@ -28,13 +28,13 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>${project.parent.artifactId}-omod-1.8</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>${project.parent.groupId}</groupId>
 			<artifactId>${project.parent.artifactId}-omod-1.8</artifactId>
@@ -45,33 +45,33 @@
 		
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
-			<artifactId>openmrs-api</artifactId>
+			<artifactId>bahmni-openmrs-api</artifactId>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.api</groupId>
-			<artifactId>openmrs-api</artifactId>
+			<artifactId>bahmni-openmrs-api</artifactId>
 			<classifier>tests</classifier>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		
 		<dependency>
 			<groupId>org.openmrs.web</groupId>
-			<artifactId>openmrs-web</artifactId>
+			<artifactId>bahmni-openmrs-web</artifactId>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		
 		<dependency>
 			<groupId>org.openmrs.web</groupId>
-			<artifactId>openmrs-web</artifactId>
+			<artifactId>bahmni-openmrs-web</artifactId>
 			<classifier>tests</classifier>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.test</groupId>
-			<artifactId>openmrs-test</artifactId>
+			<artifactId>bahmni-openmrs-test</artifactId>
 			<type>pom</type>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>

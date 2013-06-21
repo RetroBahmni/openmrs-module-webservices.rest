@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.openmrs.module</groupId>
-	<artifactId>webservices.rest</artifactId>
+	<artifactId>bahmni-webservices.rest</artifactId>
 	<version>2.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Rest Web Services</name>

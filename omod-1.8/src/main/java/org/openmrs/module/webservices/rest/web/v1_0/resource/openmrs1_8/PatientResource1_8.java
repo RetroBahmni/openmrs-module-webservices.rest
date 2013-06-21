@@ -13,9 +13,13 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
-import org.openmrs.PatientSearchParameters;
 import org.openmrs.Person;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
@@ -32,14 +36,10 @@ import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.impl.AlreadyPaged;
 import org.openmrs.module.webservices.rest.web.resource.impl.DataDelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
+import org.openmrs.module.webservices.rest.web.resource.impl.ServiceSearcher;
 import org.openmrs.module.webservices.rest.web.response.ConversionException;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
-
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * {@link Resource} for Patients, supporting standard CRUD operations
@@ -57,10 +57,10 @@ public class PatientResource1_8 extends DataDelegatingCrudResource<Patient> {
 	
 	/**
 	 * It is empty, because we set that already in the create method.
-	 * <p/>
+	 * <p>
 	 * It takes String instead of Person so that the uuid is not resolved to a person, which leads
 	 * to the Hibernate exception: the object is already associated with the session.
-	 *
+	 * 
 	 * @param instance
 	 * @param personUuid
 	 */
@@ -156,7 +156,7 @@ public class PatientResource1_8 extends DataDelegatingCrudResource<Patient> {
 	 * the POST body only person and identifiers are provided and other properties must come from
 	 * the existing person. We need to promote the existing person to be a patient by overwriting it
 	 * and at the same time preserving all person properties.
-	 *
+	 * 
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource#create(org.openmrs.module.webservices.rest.SimpleObject,
 	 *      org.openmrs.module.webservices.rest.web.RequestContext)
 	 */
