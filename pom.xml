@@ -17,12 +17,20 @@
 	  <tag>HEAD</tag>
   </scm>
 
-	<distributionManagement>
+	<!-- <distributionManagement>
 		<repository>
 			<id>openmrs-repo-modules</id>
 			<name>Modules</name>
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/modules/</url>
 		</repository>
+	</distributionManagement> -->
+
+	<distributionManagement>
+	    <snapshotRepository>
+	        <id>bahmni-artifactory</id>
+	        <name>bahmni-artifactory-snapshots</name>
+	        <url>http://bahmnirepo.thoughtworks.com/artifactory/libs-snapshot-local</url>
+	    </snapshotRepository>
 	</distributionManagement>
 
 	<modules>
@@ -35,7 +43,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<openmrs.version>1.8.1</openmrs.version>
-
 		<MODULE_ID>${project.parent.artifactId}</MODULE_ID>
 		<MODULE_NAME>${project.parent.name}</MODULE_NAME>
 		<MODULE_VERSION>${project.parent.version}</MODULE_VERSION>
@@ -443,6 +450,11 @@
 			<name>OpenMRS Nexus Repository</name>
 			<url>http://mavenrepo.openmrs.org/nexus/content/repositories/public</url>
 		</repository>
+		<repository>
+	        <id>bahmni-artifactory</id>
+	        <name>bahmni-artifactory-snapshots</name>
+	        <url>http://bahmnirepo.thoughtworks.com/artifactory/libs-snapshot-local</url>
+	    </repository>		
 	</repositories>
 
 	<pluginRepositories>
