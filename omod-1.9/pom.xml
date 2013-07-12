@@ -71,7 +71,7 @@
 			<classifier>tests</classifier>
 			<version>${openmrs.version.1.9}</version><!--$NO-MVN-MAN-VER$-->
             <scope>provided</scope>
-		</dependency>
+        </dependency>
 
 		<dependency>
 			<groupId>org.openmrs.test</groupId>
