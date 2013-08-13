@@ -7,7 +7,7 @@
 	<id>@MODULE_ID@</id>
 	<name>@MODULE_NAME@</name>
 	<version>@MODULE_VERSION@.${revisionNumber}</version>
-	<package>org.openmrs.module.webservices.rest.</package>
+	<package>org.openmrs.module.webservices.rest</package>
 	<author>OpenMRS</author>
 	<description>
 			Publishes Rest Web Services exposing the OpenMRS API
