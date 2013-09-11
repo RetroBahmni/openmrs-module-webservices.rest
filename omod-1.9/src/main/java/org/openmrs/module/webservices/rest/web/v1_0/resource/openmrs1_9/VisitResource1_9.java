@@ -12,6 +12,9 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_9;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Set;
 
 import org.openmrs.Patient;
@@ -222,11 +225,25 @@ public class VisitResource1_9 extends DataDelegatingCrudResource<Visit> {
 	 */
 	@Override
 	public SimpleObject search(RequestContext context) throws ResponseException {
-		String parameter = context.getRequest().getParameter("patient");
-		if (parameter != null) {
-			return getVisitsByPatient(parameter, context);
-		} else {
+		String patientParameter = context.getRequest().getParameter("patient");
+        String includeInactiveParameter = context.getRequest().getParameter("includeInactive");
+        if(patientParameter != null || includeInactiveParameter != null) {
+            return getVisits(context, patientParameter, includeInactiveParameter);
+        }
+        else {
 			return super.search(context);
 		}
 	}
+
+    private SimpleObject getVisits(RequestContext context, String patientParameter, String includeInactiveParameter) {
+        Collection<Patient> patients = null;
+        if (patientParameter != null) {
+            Patient patient = ((PatientResource1_8) Context.getService(RestService.class).getResourceByName(RestConstants.VERSION_1 + "/patient")).getByUniqueId(patientParameter);
+            if (patient == null)
+                throw new ObjectNotFoundException();
+            patients = Arrays.asList(patient);
+        }
+        boolean includeInactive = includeInactiveParameter == null ? true : Boolean.parseBoolean(includeInactiveParameter);
+        return new NeedsPaging<Visit>(Context.getVisitService().getVisits(null, patients, null, null, null, null, null, null, null, includeInactive, false), context).toSimpleObject();
+    }
 }
