@@ -21,6 +21,7 @@ import org.openmrs.module.webservices.rest.web.annotation.Resource;
 import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
+import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.resource.impl.MetadataDelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
@@ -140,4 +141,9 @@ public class DrugResource1_8 extends MetadataDelegatingCrudResource<Drug> {
 	protected NeedsPaging<Drug> doGetAll(RequestContext context) throws ResponseException {
 		return new NeedsPaging<Drug>(Context.getConceptService().getAllDrugs(context.getIncludeAll()), context);
 	}
+
+    @Override
+    protected PageableResult doSearch(RequestContext context) {
+        return new NeedsPaging<Drug>(Context.getConceptService().getDrugs(context.getParameter("q")), context);
+    }
 }
