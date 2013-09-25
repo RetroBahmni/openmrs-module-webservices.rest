@@ -13,15 +13,21 @@
  */
 package org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8;
 
+import org.junit.Before;
 import org.openmrs.PersonAttributeType;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.webservices.rest.web.RestTestConstants1_8;
 import org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResourceTest;
-import org.openmrs.module.webservices.rest.web.v1_0.resource.openmrs1_8.PersonAttributeTypeResource1_8;
 
 public class PersonAttributeTypeResource1_8Test extends BaseDelegatingResourceTest<PersonAttributeTypeResource1_8, PersonAttributeType> {
-	
-	@Override
+
+    private static final String ACTIVE_LIST_INITIAL_XML = "personAttributeTypeWithConcept.xml";
+
+    @Before
+    public void init() throws Exception {
+        executeDataSet(ACTIVE_LIST_INITIAL_XML);
+    }
+
+    @Override
 	public PersonAttributeType newObject() {
 		return Context.getPersonService().getPersonAttributeTypeByUuid(getUuidProperty());
 	}
@@ -49,9 +55,10 @@ public class PersonAttributeTypeResource1_8Test extends BaseDelegatingResourceTe
 		assertPropEquals("sortWeight", getObject().getSortWeight());
 		assertPropEquals("searchable", getObject().getSearchable());
 		assertPropEquals("editPrivilege", getObject().getEditPrivilege());
-		assertPropEquals("retired", getObject().getRetired());
-		assertPropPresent("auditInfo");
-	}
+        assertPropEquals("retired", getObject().getRetired());
+        assertPropEquals("concept", Context.getConceptService().getConcept(getObject().getForeignKey()));
+        assertPropPresent("auditInfo");
+    }
 	
 	@Override
 	public String getDisplayProperty() {
@@ -60,6 +67,6 @@ public class PersonAttributeTypeResource1_8Test extends BaseDelegatingResourceTe
 	
 	@Override
 	public String getUuidProperty() {
-		return RestTestConstants1_8.PERSON_ATTRIBUTE_TYPE_UUID;
+		return "55e6ce9e-25bf-11e3-a013-3c0754156a5d";
 	}
 }
