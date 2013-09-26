@@ -22,10 +22,13 @@ import org.openmrs.module.webservices.rest.web.representation.DefaultRepresentat
 import org.openmrs.module.webservices.rest.web.representation.FullRepresentation;
 import org.openmrs.module.webservices.rest.web.representation.Representation;
 import org.openmrs.module.webservices.rest.web.resource.api.PageableResult;
+import org.openmrs.module.webservices.rest.web.resource.impl.AlreadyPaged;
 import org.openmrs.module.webservices.rest.web.resource.impl.DelegatingResourceDescription;
 import org.openmrs.module.webservices.rest.web.resource.impl.MetadataDelegatingCrudResource;
 import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
+
+import java.util.List;
 
 /**
  * {@link Resource} for {@link Drug}, supporting standard CRUD operations
@@ -144,6 +147,8 @@ public class DrugResource1_8 extends MetadataDelegatingCrudResource<Drug> {
 
     @Override
     protected PageableResult doSearch(RequestContext context) {
-        return new NeedsPaging<Drug>(Context.getConceptService().getDrugs(context.getParameter("q")), context);
+        List<Drug> drugs = Context.getConceptService().getDrugs(context.getParameter("q"),
+                null, true, false, false, null, null);
+        return new AlreadyPaged<Drug>(context, drugs, false);
     }
 }
