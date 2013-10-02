@@ -35,8 +35,8 @@ import java.util.List;
  */
 @Resource(name = RestConstants.VERSION_1 + "/drug", supportedClass = Drug.class, supportedOpenmrsVersions = {"1.8.*", "1.9.*"})
 public class DrugResource1_8 extends MetadataDelegatingCrudResource<Drug> {
-	
-	/**
+
+    /**
 	 * @see org.openmrs.module.webservices.rest.web.resource.impl.BaseDelegatingResource#getByUniqueId(java.lang.String)
 	 */
 	@Override
@@ -145,10 +145,27 @@ public class DrugResource1_8 extends MetadataDelegatingCrudResource<Drug> {
 		return new NeedsPaging<Drug>(Context.getConceptService().getAllDrugs(context.getIncludeAll()), context);
 	}
 
+    /**
+     * Drug searches support the following query parameters:
+     * <ul>
+     * <li>q=(name): searches drug with name containing the query string
+     * </li>
+     * </ul>
+     *
+     * @see org.openmrs.module.webservices.rest.web.resource.impl.DelegatingCrudResource#doSearch(RequestContext)
+     */
     @Override
-    protected PageableResult doSearch(RequestContext context) {
-        List<Drug> drugs = Context.getConceptService().getDrugs(context.getParameter("q"),
-                null, true, false, false, null, null);
-        return new AlreadyPaged<Drug>(context, drugs, false);
+    protected PageableResult doSearch(RequestContext ctx) {
+        boolean searchOnPhrase = true;
+        boolean searchDrugConceptNames = false;
+        boolean includeRetired = false;
+        Integer startIndex = ctx.getStartIndex();
+        Integer limit = ctx.getLimit();
+        String drugName = ctx.getParameter("q");
+
+        Integer countOfDrugs = Context.getConceptService().getCountOfDrugs(drugName, null, searchOnPhrase, searchDrugConceptNames, includeRetired);
+        List<Drug> drugs = Context.getConceptService().getDrugs(drugName, null, searchOnPhrase, searchDrugConceptNames, includeRetired, startIndex, limit);
+        boolean hasMore = countOfDrugs > startIndex + limit;
+        return new AlreadyPaged<Drug>(ctx, drugs, hasMore);
     }
 }
